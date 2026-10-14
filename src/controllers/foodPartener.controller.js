@@ -47,7 +47,7 @@ async function loginFoodPartner(req, res) {
     email,
   });
 
-  if (!foodPartneer) {
+  if (!foodPartner) {
     return res.status(400).json({
       message: "Invalid email or password",
     });

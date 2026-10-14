@@ -12,7 +12,7 @@ async function userRegisterController(req, res) {
   });
 
   if (isUserExists) {
-    return res.status(status[400]).json({
+    return res.status(400).json({
       message: "User already exists",
     });
   }
@@ -34,7 +34,7 @@ async function userRegisterController(req, res) {
 
   res.cookie("token", token);
 
-  res.status(status.CREATED).json({
+  res.status(201).json({
     message: "User registered successfully",
     user: {
       _id: user._id,
