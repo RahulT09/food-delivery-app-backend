@@ -1,11 +1,13 @@
 const userModel = require("../models/user.model");
+const foodPartnerModel = require("../models/foodpartner.model");
 const { status } = require("http-status");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 async function userRegisterController(req, res) {
   const { fullname, email, password } = req.body;
 
-  const isUserExists = await userModel.findone({
+  const isUserExists = await userModel.findOne({
     email,
   });
 
@@ -55,7 +57,7 @@ async function loginController(req, res) {
     });
   }
 
-  const isPasswordValid = await bcrypt.comapre(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
     return res.status(400).json({
@@ -82,7 +84,18 @@ async function loginController(req, res) {
   });
 }
 
+function logOut(req, res) {
+  res.clearCookie("token");
+  res.status(200).json({
+    message: "User Logged out Successfully",
+  });
+}
+
+
+
 module.exports = {
   userRegisterController,
   loginController,
+  logOut,
+  
 };
